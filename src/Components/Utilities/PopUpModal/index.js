@@ -1,9 +1,12 @@
 import * as React from "react";
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import TextareaAutosize from "../TextArea";
+import TextField from "@mui/material/TextField";
+import { useDispatch } from "react-redux";
 const style = {
   position: "absolute",
   top: "50%",
@@ -17,10 +20,14 @@ const style = {
 };
 
 export default function AddNewRecipePopUp() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-
+  const [title, setTitle] = useState("");
+  const [photoUrl, setPhotoUrl] = useState("");
+  const [description, setDescription] = useState("");
+  const dispatch = useDispatch();
+  const handleSubmit = () => {};
   return (
     <div>
       <Button onClick={handleOpen}>Open modal</Button>
@@ -31,15 +38,33 @@ export default function AddNewRecipePopUp() {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h4" component="h2">
+            Add New Recipe
+          </Typography>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
+            Title
           </Typography>
+          <TextField
+            onChange={(e) => setTitle(e.target.value)}
+            id="standard-basic"
+            label="Standard"
+            variant="standard"
+          />
           <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+            Photo URL:
           </Typography>
-          <TextareaAutosize />
+          <TextField
+            onChange={(e) => setPhotoUrl(e.target.value)}
+            id="standard-basic"
+            label="Standard"
+            variant="standard"
+          />
+          <TextareaAutosize
+            description={description}
+            setDescription={setDescription}
+          />
           <Button>Cancel</Button>
-          <Button>Submit</Button>
+          <Button onClick={handleSubmit}>Submit</Button>
         </Box>
       </Modal>
     </div>
